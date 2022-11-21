@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "doc/container.h"
+#include "doc.h"
 
 int amogus(void* mog) {
     const char* sus = (const char*)mog;
@@ -8,7 +8,7 @@ int amogus(void* mog) {
     return 0;
 }
 
-int main(int argc, char** argv) {
+void run() {
     doc::container container(
         "mogringe",
         doc::container_settings{
@@ -17,6 +17,14 @@ int main(int argc, char** argv) {
             .release = "kinetic",
             .architecture = "amd64"});
     container.run();
+}
+
+int main(int argc, char** argv) {
+    try {
+        run();
+    } catch (doc::container_exception& ex) {
+        std::cerr << ex.what() << std::endl;
+    }
 
     return 0;
 }
