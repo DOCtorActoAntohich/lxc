@@ -3,7 +3,7 @@ default:
 	@echo Choose target
 
 .PHONY: configure
-configure:
+configure: clean
 	@cmake \
 		--no-warn-unused-cli \
 		-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE \
@@ -15,7 +15,7 @@ configure:
 		-G Ninja
 
 .PHONY: build
-build: configure
+build:
 	cmake --build \
 		./build \
 		--config Release \
@@ -23,5 +23,10 @@ build: configure
 		--
 
 .PHONY: run
-run: build
+run:
 	sudo ./bin/mogringe
+
+.PHONY: clean
+clean:
+	rm -rf build
+	rm -rf bin
