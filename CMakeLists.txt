@@ -26,5 +26,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 
+target_link_libraries(${PROJECT_NAME} lxc)
+
 # Extra include paths.
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
