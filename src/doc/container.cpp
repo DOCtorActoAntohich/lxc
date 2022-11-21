@@ -42,7 +42,8 @@ doc::container::container(std::string name, container_settings settings) :
 
 doc::container::~container() {
     if (c_->is_running(c_) && !c_->shutdown(c_, 30)) {
-        std::cerr << "Failed to gracefully stop the container: " << name_ << std::endl;
+        std::cerr << "Failed to gracefully stop the container: " << name_ << "\n"
+                  << "Forcing container to stop..." << std::endl;
     }
 
     if (c_->is_running(c_) && !c_->stop(c_)) {
