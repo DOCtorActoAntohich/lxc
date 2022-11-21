@@ -20,7 +20,7 @@ int run() {
 
     /* Create the container */
     if (!c->createl(c, "download", NULL, NULL, LXC_CREATE_QUIET,
-                    "-d", "ubuntu", "-r", "22.04", "-a", "amd64", NULL)) {
+                    "-d", "ubuntu", "-r", "kinetic", "-a", "amd64", NULL)) {
         fprintf(stderr, "Failed to create container rootfs\n");
         goto out;
     }
