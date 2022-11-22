@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <iostream>
 #include <lxc/lxccontainer.h>
 #include <sstream>
 #include <string>
