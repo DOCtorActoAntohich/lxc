@@ -20,7 +20,9 @@ doc::container::container(std::string name, container_settings settings) :
     }
 
     if (c_->is_defined(c_)) {
-        throw container_already_exists_exception(name);
+        c_->destroy(c_);
+        lxc_container_put(c_);
+        throw container_already_defined_exception(name);
     }
 
     if (!c_->createl(
@@ -38,10 +40,14 @@ doc::container::container(std::string name, container_settings settings) :
             NULL)) {
         throw container_creation_exception(name, settings);
     }
+
+    if (!c_->start(c_, 0, NULL)) {
+        throw container_start_exception(name_);
+    }
 }
 
 doc::container::~container() {
-    if (c_->is_running(c_) && !c_->shutdown(c_, 30)) {
+    if (c_->is_running(c_) && !c_->shutdown(c_, 10)) {
         std::cerr << "Failed to gracefully stop the container: " << name_ << "\n"
                   << "Forcing container to stop..." << std::endl;
     }
@@ -61,8 +67,10 @@ const std::string& doc::container::name() const {
     return name_;
 }
 
-void doc::container::start_() {
-    if (!c_->start(c_, 0, NULL)) {
-        throw container_start_exception(name_);
-    }
+std::string doc::container::state() const {
+    return c_->state(c_);
+}
+
+pid_t doc::container::init_pid() const {
+    return c_->init_pid(c_);
 }

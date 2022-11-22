@@ -5,7 +5,7 @@
 int tester(int left, std::string middle, bool right) {
     std::cout << left << " " << middle << " " << (right ? "true" : "false")
               << std::endl;
-    return left * 2 + 1;
+    return 0;
 }
 
 void run_the_funny() {
@@ -17,13 +17,19 @@ void run_the_funny() {
             .release = "kinetic",
             .architecture = "amd64"});
 
-    auto _ = container.run<int, std::string, bool>(tester, 5, "is", true);
+    std::cout << "Created contained: " << container.name() << "\n"
+              << "Current state: " << container.state() << "\n"
+              << "init_pid = " << container.init_pid() << std::endl;
+
+    std::cout << "\nExecuting test function...\n";
+    auto new_pid = container.run<int, std::string, bool>(tester, 5, "is", true);
+    std::cout << "New pid: " << new_pid << std::endl;
 }
 
 int main(int argc, char** argv) {
     try {
         run_the_funny();
-    } catch (doc::container_exception& ex) {
+    } catch (doc::container_exception const& ex) {
         std::cerr << ex.what() << std::endl;
     }
 

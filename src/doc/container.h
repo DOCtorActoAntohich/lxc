@@ -31,8 +31,6 @@ namespace doc {
 
         template<typename... var_args>
         int run(std::function<int(var_args...)> callable, var_args... args) {
-            start_();
-
             using func_type = decltype(callable);
             using args_type = std::tuple<var_args...>;
             using c_payload = std::pair<func_type, args_type>;
@@ -43,8 +41,7 @@ namespace doc {
             };
             c_payload c_args = std::make_pair(callable, std::make_tuple(args...));
 
-            lxc_attach_options_t attach_options{
-                .attach_flags = LXC_ATTACH_DEFAULT | LXC_ATTACH_TERMINAL};
+            lxc_attach_options_t attach_options = LXC_ATTACH_OPTIONS_DEFAULT;
             int out_pid;
             int ret = c_->attach(
                 c_, c_function, static_cast<void*>(&c_args), &attach_options, &out_pid);
@@ -55,9 +52,10 @@ namespace doc {
             return out_pid;
         }
 
-    private:
-        void start_();
+        std::string state() const;
+        pid_t init_pid() const;
 
+    private:
         struct lxc_container* c_;
         std::string name_;
         container_settings settings_;

@@ -18,7 +18,7 @@ namespace doc {
         std::string message_;
     };
 
-    class container_from_name_exception : container_exception {
+    class container_from_name_exception : public container_exception {
     public:
         container_from_name_exception(std::string name) :
             container_exception::container_exception(
@@ -29,18 +29,18 @@ namespace doc {
         std::string name_;
     };
 
-    class container_already_exists_exception : container_exception {
+    class container_already_defined_exception : public container_exception {
     public:
-        container_already_exists_exception(std::string name) :
+        container_already_defined_exception(std::string name) :
             container_exception::container_exception(
-                "Container already exists: " + name),
+                "Container already defined: " + name),
             name_(name) {}
 
     private:
         std::string name_;
     };
 
-    class container_creation_exception : container_exception {
+    class container_creation_exception : public container_exception {
     public:
         container_creation_exception(std::string name, container_settings settings) :
             container_exception::container_exception(
@@ -54,7 +54,7 @@ namespace doc {
         container_settings settings_;
     };
 
-    class container_start_exception : container_exception {
+    class container_start_exception : public container_exception {
     public:
         container_start_exception(std::string name) :
             container_exception::container_exception(
