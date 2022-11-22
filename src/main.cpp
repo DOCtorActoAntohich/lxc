@@ -2,13 +2,13 @@
 
 #include "doc.h"
 
-int amogus(void* mog) {
-    const char* sus = (const char*)mog;
-    printf(sus);
-    return 0;
+int tester(int left, std::string middle, bool right) {
+    std::cout << left << " " << middle << " " << (right ? "true" : "false")
+              << std::endl;
+    return left * 2 + 1;
 }
 
-void run() {
+void run_the_funny() {
     doc::container container(
         "mogringe",
         doc::container_settings{
@@ -16,12 +16,13 @@ void run() {
             .distributive = "ubuntu",
             .release = "kinetic",
             .architecture = "amd64"});
-    container.run();
+
+    auto _ = container.run<int, std::string, bool>(tester, 5, "is", true);
 }
 
 int main(int argc, char** argv) {
     try {
-        run();
+        run_the_funny();
     } catch (doc::container_exception& ex) {
         std::cerr << ex.what() << std::endl;
     }

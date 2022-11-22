@@ -61,11 +61,8 @@ const std::string& doc::container::name() const {
     return name_;
 }
 
-void doc::container::run() const {
+void doc::container::start_() {
     if (!c_->start(c_, 0, NULL)) {
         throw container_start_exception(name_);
     }
-
-    std::cout << "Container state: " << c_->state(c_) << "\n"
-              << "Container PID: " << c_->init_pid(c_) << std::endl;
 }
