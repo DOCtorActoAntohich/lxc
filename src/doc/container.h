@@ -43,7 +43,8 @@ namespace doc {
             };
             c_payload c_args = std::make_pair(callable, std::make_tuple(args...));
 
-            lxc_attach_options_t attach_options;
+            lxc_attach_options_t attach_options{
+                .attach_flags = LXC_ATTACH_DEFAULT | LXC_ATTACH_TERMINAL};
             int out_pid;
             int ret = c_->attach(
                 c_, c_function, static_cast<void*>(&c_args), &attach_options, &out_pid);
