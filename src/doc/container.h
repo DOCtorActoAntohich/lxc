@@ -47,6 +47,7 @@ namespace doc {
             int ret = c_->attach(
                 c_, c_function, static_cast<void*>(&c_args), &attach_options, &out_pid);
             if (ret != 0) {
+                std::cerr << "Failed to attach" << std::endl;
                 return -1;
             }
             return out_pid;
