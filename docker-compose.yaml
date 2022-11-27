@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  space_amongus:
+    container_name: space_amongus
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    restart: on-failure
+    networks:
+      sus_net:
+
+
+networks:
+  sus_net:
+    driver: bridge
